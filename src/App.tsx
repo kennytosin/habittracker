@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Plus, 
   Menu, 
@@ -14,8 +14,19 @@ import {
   User,
   Settings,
   Home,
-  BarChart3
+  BarChart3,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Zap
 } from 'lucide-react';
+
+// Shadcn UI Components
+import { Button } from './components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog';
+import { Input } from './components/ui/input';
+import { cn } from './lib/utils';
 
 // Types
 interface Habit {
@@ -198,9 +209,9 @@ const EMOJI_OPTIONS = [
 ];
 
 const COLOR_OPTIONS = [
-  '#6366f1', // Indigo
-  '#8b5cf6', // Violet
+  '#14b8a6', // Teal
   '#06b6d4', // Cyan
+  '#8b5cf6', // Violet
   '#10b981', // Emerald
   '#f59e0b', // Amber
   '#ef4444', // Red
@@ -224,86 +235,101 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">🎯</span>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome to HabitQuest</h1>
-          <p className="text-gray-600">Track your daily habits and build streaks</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="test@test.com"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="testpass"
-              required
-            />
-          </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 rounded-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-200"
-          >
-            Sign In
-          </button>
-        </form>
-
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 text-center">
-            <strong>Demo Credentials:</strong><br />
-            Email: test@test.com<br />
-            Password: testpass
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
+
+      <Card className="glass-teal w-full max-w-md relative z-10 border-teal-500/20 shadow-2xl">
+        <CardHeader className="text-center space-y-6">
+          <div className="mx-auto w-20 h-20 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg neon-glow">
+            <Sparkles className="w-10 h-10 text-white" />
+          </div>
+          <div>
+            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+              HabitFlow
+            </CardTitle>
+            <CardDescription className="text-slate-300 mt-2">
+              Transform your daily routine with intelligent habit tracking
+            </CardDescription>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-200">Email</label>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="glass border-teal-500/30 focus:border-teal-400 text-white placeholder:text-slate-400"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-200">Password</label>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="glass border-teal-500/30 focus:border-teal-400 text-white placeholder:text-slate-400"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg text-sm backdrop-blur-sm">
+                {error}
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-medium py-3 rounded-lg shadow-lg neon-glow transition-all duration-300 hover:scale-105"
+            >
+              <Zap className="w-4 h-4 mr-2" />
+              Sign In
+            </Button>
+          </form>
+
+          <div className="glass rounded-lg p-4 border-teal-500/20">
+            <p className="text-sm text-slate-300 text-center">
+              <span className="font-semibold text-teal-400">Demo Credentials:</span><br />
+              Email: test@test.com<br />
+              Password: testpass
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
 
 function EmojiPicker({ selectedEmoji, onEmojiSelect }: { selectedEmoji: string; onEmojiSelect: (emoji: string) => void }) {
   return (
-    <div className="grid grid-cols-6 gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg max-h-48 overflow-y-auto">
+    <div className="grid grid-cols-6 gap-2 p-4 glass rounded-xl max-h-48 overflow-y-auto">
       {EMOJI_OPTIONS.map((emoji) => (
-        <button
+        <Button
           key={emoji}
+          variant="ghost"
+          size="sm"
           onClick={() => onEmojiSelect(emoji)}
-          className={`p-3 rounded-lg text-2xl transition-all duration-200 hover:scale-110 ${
+          className={cn(
+            "p-3 text-2xl transition-all duration-200 hover:scale-110",
             selectedEmoji === emoji
-              ? 'bg-purple-500 shadow-lg transform scale-105'
-              : 'hover:bg-gray-200 dark:hover:bg-gray-700'
-          }`}
+              ? 'bg-teal-500/30 shadow-lg transform scale-105 neon-glow'
+              : 'hover:bg-white/10'
+          )}
         >
           {emoji}
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -313,14 +339,17 @@ function ColorPicker({ selectedColor, onColorSelect }: { selectedColor: string; 
   return (
     <div className="grid grid-cols-4 gap-3 p-4">
       {COLOR_OPTIONS.map((color) => (
-        <button
+        <Button
           key={color}
+          variant="ghost"
+          size="icon"
           onClick={() => onColorSelect(color)}
-          className={`w-10 h-10 rounded-full transition-all duration-200 hover:scale-110 ${
+          className={cn(
+            "w-12 h-12 rounded-xl transition-all duration-200 hover:scale-110 border-2",
             selectedColor === color
-              ? 'ring-4 ring-offset-2 ring-purple-500 shadow-lg transform scale-105'
-              : 'hover:shadow-md'
-          }`}
+              ? 'ring-4 ring-teal-400/50 shadow-lg transform scale-105 border-white/30'
+              : 'border-white/10 hover:border-white/30'
+          )}
           style={{ backgroundColor: color }}
         />
       ))}
@@ -335,7 +364,7 @@ function AddHabitModal({ isOpen, onClose, onAdd }: {
 }) {
   const [name, setName] = useState('');
   const [emoji, setEmoji] = useState('📚');
-  const [color, setColor] = useState('#6366f1');
+  const [color, setColor] = useState('#14b8a6');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -343,85 +372,72 @@ function AddHabitModal({ isOpen, onClose, onAdd }: {
       onAdd(name.trim(), emoji, color);
       setName('');
       setEmoji('📚');
-      setColor('#6366f1');
+      setColor('#14b8a6');
       onClose();
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Add New Habit</h2>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="glass-teal border-teal-500/30 max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold text-white">Add New Habit</DialogTitle>
+          <DialogDescription className="text-slate-300">
+            Create a new habit to track your daily progress
+          </DialogDescription>
+        </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Habit Name
-            </label>
-            <input
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-200">Habit Name</label>
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Read 10 pages"
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg 
-                       bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-                       focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="glass border-teal-500/30 focus:border-teal-400 text-white placeholder:text-slate-400"
               autoFocus
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Choose Icon
-            </label>
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-slate-200">Choose Icon</label>
             <EmojiPicker selectedEmoji={emoji} onEmojiSelect={setEmoji} />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Choose Color
-            </label>
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-slate-200">Choose Color</label>
             <ColorPicker selectedColor={color} onColorSelect={setColor} />
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button
+          <DialogFooter className="gap-3">
+            <Button
               type="button"
+              variant="ghost"
               onClick={onClose}
-              className="flex-1 px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 
-                       rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium"
+              className="text-slate-300 hover:text-white hover:bg-white/10"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={!name.trim()}
-              className="flex-1 px-4 py-3 bg-purple-500 text-white rounded-lg 
-                       hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow"
             >
               Add Habit
-            </button>
-          </div>
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useLocalStorage('isAuthenticated', false);
-  const [theme, setTheme] = useLocalStorage<Theme>('theme', 'light');
+  const [theme, setTheme] = useLocalStorage<Theme>('theme', 'dark');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState('habits');
   
@@ -437,16 +453,8 @@ function App() {
 
   // Apply theme
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+    document.documentElement.classList.add('dark');
+  }, []);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -465,106 +473,158 @@ function App() {
   const totalStreaks = habits.reduce((sum, habit) => sum + (habitStats[habit.id]?.currentStreak || 0), 0);
   const bestStreak = Math.max(...habits.map(habit => habitStats[habit.id]?.longestStreak || 0), 0);
 
+  const userName = "John";
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-20 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 lg:static lg:inset-0`}>
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-lg">🎯</span>
+      <div className={cn(
+        "fixed inset-y-0 left-0 z-50 glass-teal border-r border-teal-500/30 shadow-2xl transform transition-all duration-300 ease-in-out",
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+        'lg:translate-x-0 lg:static lg:inset-0',
+        sidebarCollapsed ? 'lg:w-16' : 'lg:w-64',
+        'w-64'
+      )}>
+        
+        {/* Sidebar Header */}
+        <div className="flex items-center justify-between h-16 px-4 border-b border-teal-500/30">
+          {!sidebarCollapsed && (
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-xl flex items-center justify-center neon-glow">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-lg font-semibold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                HabitFlow
+              </span>
             </div>
-            <span className="text-lg font-bold text-gray-900 dark:text-white">HabitQuest</span>
+          )}
+          
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden lg:flex hover:bg-white/10 text-slate-300"
+            >
+              {sidebarCollapsed ? (
+                <ChevronRight className="w-5 h-5" />
+              ) : (
+                <ChevronLeft className="w-5 h-5" />
+              )}
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(false)}
+              className="lg:hidden hover:bg-white/10 text-slate-300"
+            >
+              <X className="w-5 h-5" />
+            </Button>
           </div>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
 
+        {/* Greeting */}
+        {!sidebarCollapsed && (
+          <div className="p-4 border-b border-teal-500/20">
+            <p className="text-slate-300 text-sm">Good evening,</p>
+            <p className="text-white font-semibold text-lg">{userName} ✨</p>
+          </div>
+        )}
+
+        {/* Navigation */}
         <nav className="mt-6 px-3">
-          <div className="space-y-1">
-            <button
+          <div className="space-y-2">
+            <Button
+              variant="ghost"
               onClick={() => setCurrentView('habits')}
-              className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={cn(
+                "w-full justify-start text-left font-medium transition-all duration-200",
                 currentView === 'habits'
-                  ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
+                  ? 'bg-teal-500/30 text-teal-300 neon-glow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/10'
+              )}
             >
-              <Home className="w-5 h-5 mr-3" />
-              Habits
-            </button>
-            <button
+              <Home className="w-5 h-5 flex-shrink-0" />
+              {!sidebarCollapsed && <span className="ml-3">Habits</span>}
+            </Button>
+            
+            <Button
+              variant="ghost"
               onClick={() => setCurrentView('stats')}
-              className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={cn(
+                "w-full justify-start text-left font-medium transition-all duration-200",
                 currentView === 'stats'
-                  ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
+                  ? 'bg-teal-500/30 text-teal-300 neon-glow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/10'
+              )}
             >
-              <BarChart3 className="w-5 h-5 mr-3" />
-              Statistics
-            </button>
+              <BarChart3 className="w-5 h-5 flex-shrink-0" />
+              {!sidebarCollapsed && <span className="ml-3">Statistics</span>}
+            </Button>
           </div>
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-            </button>
-            <button
+        {/* Sidebar Footer */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-teal-500/30">
+          <div className={cn(
+            "flex items-center space-x-2",
+            sidebarCollapsed ? 'justify-center' : 'justify-between'
+          )}>
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleLogout}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500"
+              className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
+              title={sidebarCollapsed ? "Logout" : ""}
             >
               <LogOut className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* Overlay */}
+      {/* Overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Main Content */}
-      <div className="flex-1 lg:ml-0">
+      <div className="flex-1 relative z-10">
         {/* Header */}
-        <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <header className="glass-teal border-b border-teal-500/30 backdrop-blur-xl">
           <div className="flex items-center justify-between h-16 px-6">
             <div className="flex items-center space-x-4">
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="lg:hidden hover:bg-white/10 text-slate-300"
               >
                 <Menu className="w-5 h-5" />
-              </button>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              </Button>
+              <h1 className="text-xl font-semibold text-white">
                 {currentView === 'habits' ? 'Daily Habits' : 'Statistics'}
               </h1>
             </div>
             
             {currentView === 'habits' && (
-              <button
+              <Button
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center space-x-2 bg-purple-500 hover:bg-purple-600 text-white 
-                         px-4 py-2 rounded-lg transition-colors"
+                className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow transition-all duration-200 hover:scale-105"
               >
-                <Plus className="w-4 h-4" />
-                <span>Add Habit</span>
-              </button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Habit
+              </Button>
             )}
           </div>
         </header>
@@ -575,91 +635,105 @@ function App() {
             <div className="space-y-6">
               {/* Quick Stats */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <Target className="w-6 h-6 text-purple-500" />
-                    <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                      {totalHabits}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Active Habits</p>
-                </div>
+                <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <Target className="w-6 h-6 text-teal-400" />
+                      <span className="text-2xl font-bold text-teal-300">
+                        {totalHabits}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-2">Active Habits</p>
+                  </CardContent>
+                </Card>
 
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <TrendingUp className="w-6 h-6 text-green-500" />
-                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">
-                      {Math.round(averageCompletion)}%
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Completion</p>
-                </div>
+                <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <TrendingUp className="w-6 h-6 text-emerald-400" />
+                      <span className="text-2xl font-bold text-emerald-300">
+                        {Math.round(averageCompletion)}%
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-2">Completion</p>
+                  </CardContent>
+                </Card>
 
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <Flame className="w-6 h-6 text-orange-500" />
-                    <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                      {totalStreaks}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Streaks</p>
-                </div>
+                <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <Flame className="w-6 h-6 text-orange-400" />
+                      <span className="text-2xl font-bold text-orange-300">
+                        {totalStreaks}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-2">Total Streaks</p>
+                  </CardContent>
+                </Card>
 
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <Calendar className="w-6 h-6 text-blue-500" />
-                    <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                      {bestStreak}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Best Streak</p>
-                </div>
+                <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <Calendar className="w-6 h-6 text-blue-400" />
+                      <span className="text-2xl font-bold text-blue-300">
+                        {bestStreak}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-2">Best Streak</p>
+                  </CardContent>
+                </Card>
               </div>
 
               {/* Habits Grid */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Your Habits
-                    </h2>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      Last 7 days
-                    </span>
+              <Card className="glass-teal border-teal-500/30">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white">Your Habits</CardTitle>
+                    <span className="text-sm text-slate-400">Last 7 days</span>
                   </div>
-
+                </CardHeader>
+                <CardContent>
                   {habits.length === 0 ? (
-                    <div className="text-center py-12">
-                      <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                        <span className="text-4xl">🎯</span>
+                    <div className="text-center py-16">
+                      <div className="w-24 h-24 mx-auto mb-6 glass rounded-2xl flex items-center justify-center">
+                        <Target className="w-12 h-12 text-teal-400" />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-xl font-semibold text-white mb-3">
                         No habits yet
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                      <p className="text-slate-400 max-w-md mx-auto mb-6">
                         Start building better habits by adding your first goal. Click the "Add Habit" button to get started!
                       </p>
+                      <Button
+                        onClick={() => setIsModalOpen(true)}
+                        className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Your First Habit
+                      </Button>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       {/* Date Headers */}
                       <div className="flex items-center">
                         <div className="min-w-0 flex-1"></div>
-                        <div className="flex items-center gap-1 px-4">
+                        <div className="flex items-center gap-2 px-4">
                           {dates.map((date) => (
-                            <div key={date.toISOString()} className="flex flex-col items-center w-8">
-                              <div className={`text-sm font-medium ${
+                            <div key={date.toISOString()} className="flex flex-col items-center w-12">
+                              <div className={cn(
+                                "text-sm font-medium",
                                 isToday(date) 
-                                  ? 'text-purple-600 dark:text-purple-400' 
-                                  : 'text-gray-600 dark:text-gray-400'
-                              }`}>
+                                  ? 'text-teal-300' 
+                                  : 'text-slate-400'
+                              )}>
                                 {getMonthDay(date).split(' ')[1]}
                               </div>
-                              <div className={`text-xs ${
+                              <div className={cn(
+                                "text-xs",
                                 isToday(date)
-                                  ? 'text-purple-500 dark:text-purple-400'
-                                  : 'text-gray-400 dark:text-gray-500'
-                              }`}>
+                                  ? 'text-teal-400'
+                                  : 'text-slate-500'
+                              )}>
                                 {getDayName(date)}
                               </div>
                             </div>
@@ -670,20 +744,20 @@ function App() {
 
                       {/* Habit Rows */}
                       {habits.map((habit) => (
-                        <div key={habit.id} className="flex items-center bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                        <div key={habit.id} className="flex items-center glass rounded-2xl border border-teal-500/20 hover:border-teal-400/40 transition-all duration-300 hover:shadow-lg">
                           {/* Habit Info */}
-                          <div className="flex items-center min-w-0 flex-1 px-4 py-3">
+                          <div className="flex items-center min-w-0 flex-1 px-6 py-4">
                             <div 
-                              className="w-10 h-10 rounded-lg flex items-center justify-center text-xl mr-4 flex-shrink-0"
-                              style={{ backgroundColor: habit.color + '20' }}
+                              className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl mr-4 flex-shrink-0 shadow-lg neon-glow"
+                              style={{ backgroundColor: habit.color + '40' }}
                             >
                               {habit.emoji}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <h3 className="font-medium text-gray-900 dark:text-white truncate">
+                              <h3 className="font-medium text-white truncate">
                                 {habit.name}
                               </h3>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">
+                              <p className="text-sm text-slate-400">
                                 {habitStats[habit.id]?.currentStreak > 0 
                                   ? `🔥 ${habitStats[habit.id].currentStreak} day streak` 
                                   : 'No streak yet'}
@@ -692,115 +766,132 @@ function App() {
                           </div>
 
                           {/* Completion Grid */}
-                          <div className="flex items-center gap-1 px-4">
+                          <div className="flex items-center gap-2 px-4">
                             {dates.map((date) => {
                               const dateString = formatDate(date);
                               const isCompleted = habit.completions[dateString];
                               const isTodayDate = isToday(date);
 
                               return (
-                                <button
+                                <Button
                                   key={dateString}
+                                  variant="ghost"
+                                  size="icon"
                                   onClick={() => toggleCompletion(habit.id, dateString)}
-                                  className={`w-8 h-8 rounded-lg transition-all duration-200 hover:scale-110 ${
+                                  className={cn(
+                                    "w-12 h-12 rounded-2xl transition-all duration-200 hover:scale-110 active:scale-95",
                                     isCompleted
-                                      ? 'text-white shadow-md'
-                                      : `border-2 ${
+                                      ? 'text-white shadow-lg transform scale-105 neon-glow'
+                                      : cn(
+                                          'border-2 hover:shadow-md',
                                           isTodayDate 
-                                            ? 'border-purple-400 bg-purple-50 dark:bg-purple-900/20' 
-                                            : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
-                                        } bg-white dark:bg-gray-600`
-                                  }`}
+                                            ? 'border-teal-400/60 bg-teal-500/20 shadow-sm' 
+                                            : 'border-slate-600 hover:border-slate-500 bg-slate-800/50'
+                                        )
+                                  )}
                                   style={isCompleted ? { backgroundColor: habit.color } : {}}
                                   title={`${habit.name} - ${date.toLocaleDateString()}`}
                                 >
-                                  {isCompleted && <span className="text-lg">✓</span>}
-                                </button>
+                                  {isCompleted && <span className="text-lg font-bold">✓</span>}
+                                </Button>
                               );
                             })}
                           </div>
 
                           {/* Delete Button */}
                           <div className="px-4">
-                            <button
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               onClick={() => deleteHabit(habit.id)}
-                              className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                              className="text-slate-400 hover:text-red-400 hover:bg-red-500/20 transition-all duration-200"
                               title="Delete habit"
                             >
                               <Trash2 className="w-4 h-4" />
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </div>
           ) : (
             /* Statistics View */
             <div className="space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                  Detailed Statistics
-                </h2>
-                
-                {habits.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                    Add some habits to see detailed statistics!
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    {habits.map((habit) => {
-                      const stats = habitStats[habit.id];
-                      if (!stats) return null;
+              <Card className="glass-teal border-teal-500/30">
+                <CardHeader>
+                  <CardTitle className="text-white">Detailed Statistics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {habits.length === 0 ? (
+                    <div className="text-center py-16">
+                      <div className="w-24 h-24 mx-auto mb-6 glass rounded-2xl flex items-center justify-center">
+                        <BarChart3 className="w-8 h-8 text-slate-400" />
+                      </div>
+                      <p className="text-slate-400">
+                        Add some habits to see detailed statistics!
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      {habits.map((habit) => {
+                        const stats = habitStats[habit.id];
+                        if (!stats) return null;
 
-                      return (
-                        <div key={habit.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center">
-                              <span className="text-2xl mr-3">{habit.emoji}</span>
-                              <div>
-                                <h3 className="font-medium text-gray-900 dark:text-white">{habit.name}</h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                  Created {new Date(habit.createdAt).toLocaleDateString()}
-                                </p>
+                        return (
+                          <div key={habit.id} className="glass rounded-2xl p-6 border border-teal-500/20">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="flex items-center">
+                                <div 
+                                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl mr-4 shadow-lg neon-glow"
+                                  style={{ backgroundColor: habit.color + '40' }}
+                                >
+                                  {habit.emoji}
+                                </div>
+                                <div>
+                                  <h3 className="font-medium text-white">{habit.name}</h3>
+                                  <p className="text-sm text-slate-400">
+                                    Created {new Date(habit.createdAt).toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                              <div className="text-center">
+                                <div className="text-3xl font-bold text-teal-300 mb-1">
+                                  {stats.currentStreak}
+                                </div>
+                                <div className="text-sm text-slate-400">Current Streak</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-3xl font-bold text-orange-300 mb-1">
+                                  {stats.longestStreak}
+                                </div>
+                                <div className="text-sm text-slate-400">Longest Streak</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-3xl font-bold text-emerald-300 mb-1">
+                                  {Math.round(stats.completionRate)}%
+                                </div>
+                                <div className="text-sm text-slate-400">Completion Rate</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-3xl font-bold text-blue-300 mb-1">
+                                  {stats.totalCompletions}
+                                </div>
+                                <div className="text-sm text-slate-400">Total Completions</div>
                               </div>
                             </div>
                           </div>
-                          
-                          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                                {stats.currentStreak}
-                              </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400">Current Streak</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                                {stats.longestStreak}
-                              </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400">Longest Streak</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                                {Math.round(stats.completionRate)}%
-                              </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400">Completion Rate</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                                {stats.totalCompletions}
-                              </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400">Total Completions</div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           )}
         </main>
