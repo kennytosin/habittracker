@@ -238,15 +238,15 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/20 rounded-full blur-3xl float-slow"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl float-medium delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl pulse-glow delay-500"></div>
       </div>
 
-      <Card className="glass-teal w-full max-w-md relative z-10 border-teal-500/20 shadow-2xl">
+      <Card className="notion-card w-full max-w-md relative z-10 animate-scaleIn">
         <CardHeader className="text-center space-y-6">
-          <div className="mx-auto w-20 h-20 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg neon-glow">
-            <Sparkles className="w-10 h-10 text-white" />
+          <div className="mx-auto w-20 h-20 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg neon-glow pulse-glow">
+            <Sparkles className="w-10 h-10 text-white icon-glow" />
           </div>
           <div>
             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
@@ -292,9 +292,10 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-medium py-3 rounded-lg shadow-lg neon-glow transition-all duration-300 hover:scale-105"
+              variant="neon"
+              className="w-full font-medium py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
             >
-              <Zap className="w-4 h-4 mr-2" />
+              <Zap className="w-4 h-4 mr-2 icon-glow" />
               Sign In
             </Button>
           </form>
@@ -422,7 +423,8 @@ function AddHabitModal({ isOpen, onClose, onAdd }: {
             <Button
               type="submit"
               disabled={!name.trim()}
-              className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow"
+              variant="neon"
+              className="neon-glow hover:scale-105 transition-all duration-300"
             >
               Add Habit
             </Button>
@@ -496,8 +498,8 @@ function App() {
         <div className="flex items-center justify-between h-16 px-4 border-b border-teal-500/30">
           {!sidebarCollapsed && (
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-xl flex items-center justify-center neon-glow">
-                <Sparkles className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-xl flex items-center justify-center neon-glow pulse-glow">
+                <Sparkles className="w-5 h-5 text-white icon-glow" />
               </div>
               <span className="text-lg font-semibold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 HabitFlow
@@ -513,9 +515,9 @@ function App() {
               className="hidden lg:flex hover:bg-white/10 text-slate-300"
             >
               {sidebarCollapsed ? (
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5 icon-glow" />
               ) : (
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-5 h-5 icon-glow" />
               )}
             </Button>
             
@@ -525,7 +527,7 @@ function App() {
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden hover:bg-white/10 text-slate-300"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 icon-glow" />
             </Button>
           </div>
         </div>
@@ -610,7 +612,7 @@ function App() {
                 onClick={() => setSidebarOpen(true)}
                 className="lg:hidden hover:bg-white/10 text-slate-300"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-5 h-5 icon-glow" />
               </Button>
               <h1 className="text-xl font-semibold text-white">
                 {currentView === 'habits' ? 'Daily Habits' : 'Statistics'}
@@ -619,10 +621,11 @@ function App() {
             
             {currentView === 'habits' && (
               <Button
+                variant="neon"
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow transition-all duration-200 hover:scale-105"
+                className="transition-all duration-200 hover:scale-105"
               >
-                <Plus className="w-4 h-4 mr-2" />
+                <Plus className="w-4 h-4 mr-2 icon-glow" />
                 Add Habit
               </Button>
             )}
@@ -638,7 +641,7 @@ function App() {
                 <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
-                      <Target className="w-6 h-6 text-teal-400" />
+                      <Target className="w-6 h-6 text-teal-400 icon-glow" />
                       <span className="text-2xl font-bold text-teal-300">
                         {totalHabits}
                       </span>
@@ -650,7 +653,7 @@ function App() {
                 <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
-                      <TrendingUp className="w-6 h-6 text-emerald-400" />
+                      <TrendingUp className="w-6 h-6 text-emerald-400 icon-glow" />
                       <span className="text-2xl font-bold text-emerald-300">
                         {Math.round(averageCompletion)}%
                       </span>
@@ -662,7 +665,7 @@ function App() {
                 <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
-                      <Flame className="w-6 h-6 text-orange-400" />
+                      <Flame className="w-6 h-6 text-orange-400 icon-glow" />
                       <span className="text-2xl font-bold text-orange-300">
                         {totalStreaks}
                       </span>
@@ -674,7 +677,7 @@ function App() {
                 <Card className="glass-teal border-teal-500/30 hover:border-teal-400/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
-                      <Calendar className="w-6 h-6 text-blue-400" />
+                      <Calendar className="w-6 h-6 text-blue-400 icon-glow" />
                       <span className="text-2xl font-bold text-blue-300">
                         {bestStreak}
                       </span>
@@ -696,7 +699,7 @@ function App() {
                   {habits.length === 0 ? (
                     <div className="text-center py-16">
                       <div className="w-24 h-24 mx-auto mb-6 glass rounded-2xl flex items-center justify-center">
-                        <Target className="w-12 h-12 text-teal-400" />
+                        <Target className="w-12 h-12 text-teal-400 icon-glow animate-bounce" />
                       </div>
                       <h3 className="text-xl font-semibold text-white mb-3">
                         No habits yet
@@ -705,10 +708,11 @@ function App() {
                         Start building better habits by adding your first goal. Click the "Add Habit" button to get started!
                       </p>
                       <Button
+                        variant="neon"
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white neon-glow"
+                        className="neon-glow hover:scale-105 transition-all duration-300"
                       >
-                        <Plus className="w-4 h-4 mr-2" />
+                        <Plus className="w-4 h-4 mr-2 icon-glow" />
                         Add Your First Habit
                       </Button>
                     </div>
@@ -781,7 +785,7 @@ function App() {
                                   className={cn(
                                     "w-12 h-12 rounded-2xl transition-all duration-200 hover:scale-110 active:scale-95",
                                     isCompleted
-                                      ? 'text-white shadow-lg transform scale-105 neon-glow'
+                                      ? 'text-white shadow-lg transform scale-105 neon-glow checkmark-pop'
                                       : cn(
                                           'border-2 hover:shadow-md',
                                           isTodayDate 
@@ -792,7 +796,7 @@ function App() {
                                   style={isCompleted ? { backgroundColor: habit.color } : {}}
                                   title={`${habit.name} - ${date.toLocaleDateString()}`}
                                 >
-                                  {isCompleted && <span className="text-lg font-bold">✓</span>}
+                                  {isCompleted && <span className="text-lg font-bold checkmark-pop">✓</span>}
                                 </Button>
                               );
                             })}
@@ -807,7 +811,7 @@ function App() {
                               className="text-slate-400 hover:text-red-400 hover:bg-red-500/20 transition-all duration-200"
                               title="Delete habit"
                             >
-                              <Trash2 className="w-4 h-4" />
+                              <Trash2 className="w-4 h-4 icon-glow" />
                             </Button>
                           </div>
                         </div>
@@ -828,7 +832,7 @@ function App() {
                   {habits.length === 0 ? (
                     <div className="text-center py-16">
                       <div className="w-24 h-24 mx-auto mb-6 glass rounded-2xl flex items-center justify-center">
-                        <BarChart3 className="w-8 h-8 text-slate-400" />
+                        <BarChart3 className="w-8 h-8 text-slate-400 icon-glow animate-bounce" />
                       </div>
                       <p className="text-slate-400">
                         Add some habits to see detailed statistics!

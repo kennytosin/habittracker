@@ -66,30 +66,70 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "fade-in": {
-          from: { opacity: "0", transform: "translateY(10px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+        "rotateBorder": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
-        "scale-in": {
-          from: { opacity: "0", transform: "scale(0.9)" },
-          to: { opacity: "1", transform: "scale(1)" },
+        "fadeIn": {
+          from: { 
+            opacity: "0", 
+            transform: "translateY(20px) scale(0.95)" 
+          },
+          to: { 
+            opacity: "1", 
+            transform: "translateY(0) scale(1)" 
+          },
         },
-        "slide-in": {
-          from: { transform: "translateX(-100%)" },
-          to: { transform: "translateX(0)" },
+        "scaleIn": {
+          from: { 
+            opacity: "0", 
+            transform: "scale(0.8) rotate(-10deg)" 
+          },
+          to: { 
+            opacity: "1", 
+            transform: "scale(1) rotate(0deg)" 
+          },
         },
-        "glow": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(20, 184, 166, 0.5)" },
-          "50%": { boxShadow: "0 0 30px rgba(20, 184, 166, 0.8)" },
+        "slideIn": {
+          from: { 
+            transform: "translateX(-100%) scale(0.9)",
+            opacity: "0"
+          },
+          to: { 
+            transform: "translateX(0) scale(1)",
+            opacity: "1"
+          },
+        },
+        "glowPulse": {
+          "0%, 100%": { 
+            boxShadow: "0 0 20px rgba(20, 184, 166, 0.4)",
+            filter: "brightness(1)"
+          },
+          "50%": { 
+            boxShadow: "0 0 40px rgba(20, 184, 166, 0.8)",
+            filter: "brightness(1.2)"
+          },
+        },
+        "bounce": {
+          "0%, 100%": {
+            transform: "translateY(0)",
+            animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
+          },
+          "50%": {
+            transform: "translateY(-25%)",
+            animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)"
+          }
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.3s ease-out",
-        "scale-in": "scale-in 0.2s ease-out",
-        "slide-in": "slide-in 0.3s ease-out",
-        "glow": "glow 2s ease-in-out infinite",
+        "rotateBorder": "rotateBorder 3s linear infinite",
+        "fadeIn": "fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+        "scaleIn": "scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "slideIn": "slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        "glowPulse": "glowPulse 2s ease-in-out infinite",
+        "bounce": "bounce 1s infinite",
       },
       backdropBlur: {
         xs: '2px',
